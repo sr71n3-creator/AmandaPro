@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMANDA PRO - Sistema Elite Bikini</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #1a1a2e;
+            --primary-light: #f8f9fa;
+            --accent-pink: #e83e8c;
+            --accent-purple: #6f42c1;
+            --accent-gold: #ffc107;
+            --accent-teal: #20c997;
+            --accent-danger: #dc3545;
+            --accent-success: #28a745;
+            --shadow-heavy: 0 10px 20px rgba(0, 0, 0, 0.5);
+            --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0c0c1a 0%, #1a1a2e 100%);
+            color: var(--primary-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Aprimorado */
+        .header {
+            background: linear-gradient(to right, rgba(26, 26, 46, 0.95), rgba(42, 42, 62, 0.95));
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            box-shadow: var(--shadow-heavy);
+            border-left: 5px solid var(--accent-pink);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-pic-container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-pic {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-pink);
+            object-fit: cover;
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            box-shadow: 0 0 15px rgba(232, 62, 140, 0.5);
+        }
+
+        .change-photo-btn {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: var(--accent-gold);
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-light);
+        }
+
+        .profile-info h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, var(--accent-pink), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .profile-info .phase {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            background: rgba(255, 193, 7, 0.1);
+            padding: 5px 12px;
+            border-radius: 15px;
+            display: inline-block;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .date-display {
+            text-align: right;
+        }
+
+        .date-display .current-date {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 5px;
+        }
+
+        .date-display .week-progress {
+            font-size: 0.9rem;
+            color: var(--accent-teal);
+            background: rgba(32, 201, 151, 0.1);
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        /* Progresso Diário */
+        .daily-progress {
+            background: rgba(42, 42, 62, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-light);
+        }
+
+        .progress-overall {
+            text-align: center;
+        }
+
+        .progress-percentage {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            color: var(--accent-pink);
+            line-height: 1;
+        }
+
+        .progress-label {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Treino Semanal Aprimorado */
+        .training-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-pink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .training-week {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .day-card {
+            background: linear-gradient(145deg, rgba(42, 42, 62, 0.9), rgba(26, 26, 46, 0.9));
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow-heavy);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-card.active {
+            border-color: var(--accent-pink);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(232, 62, 140, 0.2);
+        }
+
+        .day-card.active:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(232, 62, 140, 0.2) 0%, transparent 70%);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .day-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .day-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4a5568;
+        }
+
+        .day-status.completed {
+            background: var(--accent-purple);
+            box-shadow: 0 0 10px rgba(111, 66, 193, 0.7);
+        }
+
+        .day-status.active {
+            background: var(--accent-pink);
+            box-shadow: 0 0 10px rgba(232, 62, 140, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+
+        .muscle-groups {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .muscle-tag {
+            background: rgba(232, 62, 140, 0.2);
+            color: var(--accent-pink);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(232, 62, 140, 0.3);
+        }
+
+        .exercises-list {
+            list-style: none;
+        }
+
+        .exercise-item {
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exercise-item:last-child {
+            border-bottom: none;
+        }
+
+        .exercise-name {
+            color: #ccc;
+            flex: 1;
+        }
+
+        .exercise-sets {
+            color: var(--accent-gold);
+            font-weight: 500;
+            margin-right: 10px;
+        }
+
+        .exercise-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .complete-btn, .edit-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .complete-btn {
+            background: rgba(32, 201, 151, 0.2);
+            color: var(--accent-teal);
+            border: 1px solid var(--accent-teal);
+        }
+
+        .complete-btn.completed {
+            background: var(--accent-teal);
+            color: white;
+        }
+
+        .edit-btn {
+            background: rgba(255, 193, 7, 0.2);
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+        }
+
+        /* Sistema de Checklist Aprimorado */
+        .checklist-section {
+            background: rgba(42, 42, 62, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-heavy);
+            border-left: 5px solid var(--accent-teal);
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .checklist-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .checklist-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-pink);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .checklist-item.completed {
+            background: rgba(32, 201, 151, 0.1);
+            border-color: var(--accent-teal);
+        }
+
+        .check-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .check-icon:hover {
+            background: rgba(111, 66, 193, 0.1);
+        }
+
+        .check-icon.completed {
+            background: var(--accent-teal);
+            border-color: var(--accent-teal);
+        }
+
+        .check-icon.completed:after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .checklist-content {
+            flex: 1;
+        }
+
+        .checklist-title {
+            font-family: 'Oswald', sans-serif;
+            color: white;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+
+        .checklist-progress {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent-pink), var(--accent-purple));
+            border-radius: 3px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        /* Sistema de Dados Aprimorado */
+        .data-system {
+            background: rgba(42, 42, 62, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-heavy);
+            border-left: 5px solid var(--accent-purple);
+        }
+
+        .data-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .data-tab {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Oswald', sans-serif;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+        }
+
+        .data-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .data-tab.active {
+            background: linear-gradient(to right, var(--accent-pink), var(--accent-purple));
+            border-color: var(--accent-pink);
+        }
+
+        .data-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .data-content.active {
+            display: block;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 10px rgba(232, 62, 140, 0.3);
+        }
+
+        .water-calculator {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(32, 201, 151, 0.3);
+        }
+
+        .water-result {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 10px;
+        }
+
+        .water-icon {
+            font-size: 2rem;
+            color: var(--accent-teal);
+        }
+
+        .water-info h4 {
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .water-info p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .save-btn {
+            background: linear-gradient(to right, var(--accent-pink), var(--accent-purple));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            font-size: 1rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .save-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(232, 62, 140, 0.4);
+        }
+
+        /* Motivação do Dia */
+        .motivation-section {
+            background: linear-gradient(135deg, rgba(232, 62, 140, 0.1), rgba(111, 66, 193, 0.1));
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--accent-gold);
+            text-align: center;
+        }
+
+        .motivation-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: white;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .motivation-date {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modais */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid var(--accent-pink);
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            border: 3px solid var(--accent-pink);
+            text-align: center;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        /* Notificações */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(to right, var(--accent-pink), var(--accent-purple));
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-heavy);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            transform: translateX(200%);
+            transition: transform 0.5s ease;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .date-display {
+                text-align: center;
+            }
+            
+            .training-week {
+                grid-template-columns: 1fr;
+            }
+            
+            .checklist-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .daily-progress {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .data-tabs {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .motivation-text {
+                font-size: 1.2rem;
+            }
+            
+            .progress-percentage {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sistema de Notificações -->
+    <div id="notification" class="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">Dados salvos com sucesso!</span>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-content">
+            <h1 style="font-family: 'Oswald', sans-serif; font-size: 2.5rem; color: var(--accent-pink); margin-bottom: 10px;">
+                AMANDA PRO
+            </h1>
+            <p style="color: #ccc; margin-bottom: 30px;">Sistema Elite de Acompanhamento Bikini</p>
+            
+            <div class="input-group" style="margin-bottom: 20px; text-align: left;">
+                <label for="loginUsername"><i class="fas fa-user"></i> Usuário</label>
+                <input type="text" id="loginUsername" class="login-input" placeholder="Digite seu usuário" value="amanda">
+            </div>
+            
+            <div class="input-group" style="margin-bottom: 20px; text-align: left;">
+                <label for="loginPassword"><i class="fas fa-lock"></i> Senha</label>
+                <input type="password" id="loginPassword" class="login-input" placeholder="Digite sua senha" value="pro123">
+            </div>
+            
+            <button id="loginBtn" class="save-btn" style="margin-top: 10px;">
+                <i class="fas fa-sign-in-alt"></i> Entrar no Sistema
+            </button>
+            
+            <p style="margin-top: 20px; color: #ccc; font-size: 0.9rem;">
+                Use: amanda / pro123
+            </p>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <div class="profile-section">
+                <div class="profile-pic-container">
+                    <div id="profilePic" class="profile-pic">A</div>
+                    <button id="changePhotoBtn" class="change-photo-btn">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                <div class="profile-info">
+                    <h1 id="athleteName">AMANDA</h1>
+                    <span class="phase" id="phaseText">BULKING QUALIDADE • BIKINI MARÇO 2024</span>
+                </div>
+            </div>
+            <div class="date-display">
+                <div id="currentDate" class="current-date">Carregando...</div>
+                <div class="week-progress" id="weekProgress">Semana 2 de 12 • Progresso: 15%</div>
+            </div>
+        </header>
+
+        <!-- Progresso Diário -->
+        <section class="daily-progress">
+            <div class="progress-overall">
+                <div class="progress-percentage">78%</div>
+                <div class="progress-label">Progresso Diário</div>
+            </div>
+            <div style="color: #ccc; font-size: 0.9rem;">
+                <i class="fas fa-calendar-day" style="color: var(--accent-pink);"></i>
+                <span style="margin-left: 8px;">Meta: 85% para hoje</span>
+            </div>
+            <div style="color: #ccc; font-size: 0.9rem;">
+                <i class="fas fa-weight" style="color: var(--accent-gold);"></i>
+                <span style="margin-left: 8px;">68,5kg (+0,3kg/semana)</span>
+            </div>
+        </section>
+
+        <!-- Treino Semanal com foco em glúteos -->
+        <section class="training-section">
+            <h2 class="section-title">
+                <i class="fas fa-dumbbell"></i> TREINO FOCO GLÚTEOS - MARÇO 2024
+            </h2>
+            <div class="training-week" id="trainingWeek">
+                <!-- Dias serão carregados via JavaScript -->
+            </div>
+            <button id="addExerciseBtn" class="save-btn" style="width: auto; display: inline-block;">
+                <i class="fas fa-plus"></i> Adicionar Exercício
+            </button>
+        </section>
+
+        <!-- Sistema de Checklist -->
+        <section class="checklist-section">
+            <h2 class="section-title">
+                <i class="fas fa-tasks"></i> CHECKLIST DIÁRIO - ATLETA BIKINI
+            </h2>
+            <div class="checklist-grid" id="checklistGrid">
+                <!-- Checklist será carregado via JavaScript -->
+            </div>
+            <button id="addChecklistItemBtn" class="save-btn" style="width: auto; display: inline-block;">
+                <i class="fas fa-plus"></i> Novo Item
+            </button>
+        </section>
+
+        <!-- Sistema de Dados Completo -->
+        <section class="data-system">
+            <h2 class="section-title">
+                <i class="fas fa-chart-line"></i> CENTRO DE DADOS ELITE
+            </h2>
+            
+            <div class="data-tabs">
+                <div class="data-tab active" data-tab="nutrition">Nutrição Avançada</div>
+                <div class="data-tab" data-tab="measures">Medidas Corporais</div>
+                <div class="data-tab" data-tab="hormones">Hormonização</div>
+                <div class="data-tab" data-tab="supplements">Suplementação</div>
+                <div class="data-tab" data-tab="sleep">Sono & Recuperação</div>
+            </div>
+            
+            <!-- Nutrição com cálculo de água -->
+            <div id="nutritionContent" class="data-content active">
+                <div class="water-calculator">
+                    <h3 style="color: white; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-tint" style="color: var(--accent-teal);"></i>
+                        Cálculo de Hidratação para Usuária de Esteroides
+                    </h3>
+                    <div class="data-grid">
+                        <div class="input-group">
+                            <label for="userWeight"><i class="fas fa-weight"></i> Peso (kg)</label>
+                            <input type="number" id="userWeight" step="0.1" value="68.5" min="30" max="200">
+                        </div>
+                        <div class="input-group">
+                            <label for="userHeight"><i class="fas fa-ruler-vertical"></i> Altura (cm)</label>
+                            <input type="number" id="userHeight" value="165" min="100" max="250">
+                        </div>
+                        <div class="input-group">
+                            <label for="steroidUse"><i class="fas fa-syringe"></i> Uso de Esteroides</label>
+                            <select id="steroidUse">
+                                <option value="true" selected>Sim</option>
+                                <option value="false">Não</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="calculateWaterBtn" class="save-btn" style="margin-top: 15px; width: auto;">
+                        <i class="fas fa-calculator"></i> Calcular Hidratação
+                    </button>
+                    
+                    <div id="waterResult" class="water-result" style="display: none;">
+                        <div class="water-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="water-info">
+                            <h4>Recomendação de Água</h4>
+                            <p id="waterRecommendation">5.5L por dia</p>
+                            <small style="color: var(--accent-teal);">
+                                <i class="fas fa-info-circle"></i> Inclui 30% extra para proteção renal durante ciclo
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-grid">
+                    <div class="input-group">
+                        <label for="waterInput"><i class="fas fa-tint"></i> Água Consumida (litros)</label>
+                        <input type="number" id="waterInput" step="0.1" min="0" max="10" placeholder="Ex: 5.5">
+                    </div>
+                    <div class="input-group">
+                        <label for="proteinInput"><i class="fas fa-drumstick-bite"></i> Proteína (g)</label>
+                        <input type="number" id="proteinInput" min="0" max="500" placeholder="Ex: 200">
+                    </div>
+                    <div class="input-group">
+                        <label for="carbsInput"><i class="fas fa-bread-slice"></i> Carboidratos (g)</label>
+                        <input type="number" id="carbsInput" min="0" max="1000" placeholder="Ex: 320">
+                    </div>
+                    <div class="input-group">
+                        <label for="mealsInput"><i class="fas fa-utensils"></i> Refeições Realizadas</label>
+                        <select id="mealsInput">
+                            <option value="7">7/7 (Ideal)</option>
+                            <option value="6">6/7</option>
+                            <option value="5">5/7</option>
+                            <option value="4">4/7</option>
+                            <option value="3">3/7</option>
+                            <option value="2">2/7</option>
+                            <option value="1">1/7</option>
+                            <option value="0">0/7</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="save-btn" onclick="saveNutritionData()">
+                    <i class="fas fa-save"></i> Salvar Dados Nutricionais
+                </button>
+            </div>
+            
+            <!-- Medidas Corporais -->
+            <div id="measuresContent" class="data-content">
+                <div class="data-grid">
+                    <div class="input-group">
+                        <label for="weightInput"><i class="fas fa-weight"></i> Peso (kg)</label>
+                        <input type="number" id="weightInput" step="0.1" min="30" max="200" placeholder="Ex: 68.5">
+                    </div>
+                    <div class="input-group">
+                        <label for="fatInput"><i class="fas fa-percentage"></i> % Gordura</label>
+                        <input type="number" id="fatInput" step="0.1" min="5" max="50" placeholder="Ex: 12.5">
+                    </div>
+                    <div class="input-group">
+                        <label for="waistInput"><i class="fas fa-compress-alt"></i> Cintura (cm)</label>
+                        <input type="number" id="waistInput" step="0.1" min="40" max="150" placeholder="Ex: 68.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="hipInput"><i class="fas fa-expand-alt"></i> Quadril (cm)</label>
+                        <input type="number" id="hipInput" step="0.1" min="60" max="200" placeholder="Ex: 92.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="glutesInput"><i class="fas fa-expand-alt"></i> Glúteos (cm)</label>
+                        <input type="number" id="glutesInput" step="0.1" min="60" max="200" placeholder="Ex: 98.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="thighInput"><i class="fas fa-expand-alt"></i> Coxa (cm)</label>
+                        <input type="number" id="thighInput" step="0.1" min="20" max="150" placeholder="Ex: 58.0">
+                    </div>
+                </div>
+                <button class="save-btn" onclick="saveMeasuresData()">
+                    <i class="fas fa-save"></i> Salvar Medidas
+                </button>
+            </div>
+            
+            <!-- Hormonização -->
+            <div id="hormonesContent" class="data-content">
+                <div class="data-grid">
+                    <div class="input-group">
+                        <label for="hormoneType"><i class="fas fa-syringe"></i> Tipo de Hormônio</label>
+                        <select id="hormoneType">
+                            <option value="testosterone_gel" selected>Testosterona Gel 5%</option>
+                            <option value="testosterone_injection">Testosterona Injetável</option>
+                            <option value="estrogen">Estrogênio</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="hormoneDose"><i class="fas fa-prescription-bottle"></i> Dosagem (mg)</label>
+                        <input type="number" id="hormoneDose" step="0.1" value="50.0" placeholder="Ex: 50.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="hormoneTime"><i class="fas fa-clock"></i> Horário da Aplicação</label>
+                        <input type="time" id="hormoneTime" value="08:00">
+                    </div>
+                    <div class="input-group">
+                        <label for="applicationSite"><i class="fas fa-location-arrow"></i> Local da Aplicação</label>
+                        <select id="applicationSite">
+                            <option value="shoulders" selected>Ombros</option>
+                            <option value="abdomen">Abdômen</option>
+                            <option value="thighs">Coxas</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="sideEffects"><i class="fas fa-exclamation-triangle"></i> Efeitos Colaterais</label>
+                        <select id="sideEffects">
+                            <option value="none" selected>Nenhum</option>
+                            <option value="mild">Leves</option>
+                            <option value="moderate">Moderados</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="save-btn" onclick="saveHormoneData()">
+                    <i class="fas fa-save"></i> Registrar Hormonização
+                </button>
+            </div>
+            
+            <!-- Suplementação -->
+            <div id="supplementsContent" class="data-content">
+                <div class="data-grid">
+                    <div class="input-group">
+                        <label for="creatineInput"><i class="fas fa-capsules"></i> Creatina (5g)</label>
+                        <select id="creatineInput">
+                            <option value="true" selected>Tomado</option>
+                            <option value="false">Não tomado</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="liverInput"><i class="fas fa-liver"></i> Proteção Hepática</label>
+                        <select id="liverInput">
+                            <option value="true" selected>Tomado</option>
+                            <option value="false">Não tomado</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="teaInput"><i class="fas fa-mug-hot"></i> Chá Saw Palmetto</label>
+                        <select id="teaInput">
+                            <option value="true" selected>Tomado</option>
+                            <option value="false">Não tomado</option>
+                        </select>
+                        <small style="color: #aaa; font-size: 0.8rem;">
+                            Reduz efeitos colaterais da testosterona, cuida da pele e cabelo
+                        </small>
+                    </div>
+                    <div class="input-group">
+                        <label for="omegaInput"><i class="fas fa-heart"></i> Ômega 3</label>
+                        <select id="omegaInput">
+                            <option value="true" selected>Tomado</option>
+                            <option value="false">Não tomado</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="zmaInput"><i class="fas fa-bed"></i> ZMA (Zinco + Magnésio)</label>
+                        <select id="zmaInput">
+                            <option value="true" selected>Tomado</option>
+                            <option value="false">Não tomado</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="save-btn" onclick="saveSupplementsData()">
+                    <i class="fas fa-save"></i> Registrar Suplementação
+                </button>
+            </div>
+            
+            <!-- Sono & Recuperação -->
+            <div id="sleepContent" class="data-content">
+                <div class="data-grid">
+                    <div class="input-group">
+                        <label for="sleepHoursInput"><i class="fas fa-bed"></i> Horas de Sono</label>
+                        <input type="number" id="sleepHoursInput" step="0.5" min="0" max="24" value="8.0">
+                        <small style="color: #aaa; font-size: 0.8rem;">
+                            Crítico: 8-9h para recuperação muscular com hormônios
+                        </small>
+                    </div>
+                    <div class="input-group">
+                        <label for="sleepQualityInput"><i class="fas fa-star"></i> Qualidade (1-10)</label>
+                        <select id="sleepQualityInput">
+                            <option value="10">10 - Excelente</option>
+                            <option value="9">9</option>
+                            <option value="8" selected>8</option>
+                            <option value="7">7</option>
+                            <option value="6">6</option>
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1 - Muito Ruim</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="stressInput"><i class="fas fa-brain"></i> Estresse (1-10)</label>
+                        <select id="stressInput">
+                            <option value="1">1 - Muito Baixo</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="4">4</option>
+                            <option value="5">5 - Moderado</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10 - Muito Alto</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="recoveryInput"><i class="fas fa-spa"></i> Recuperação Ativa</label>
+                        <select id="recoveryInput">
+                            <option value="true" selected>Realizada</option>
+                            <option value="false">Não realizada</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="save-btn" onclick="saveSleepData()">
+                    <i class="fas fa-save"></i> Salvar Dados de Sono
+                </button>
+            </div>
+        </section>
+
+        <!-- Motivação do Dia -->
+        <section class="motivation-section">
+            <p id="motivationText" class="motivation-text">
+                "A disciplina de hoje é o palco de amanhã. Cada escolha certa te aproxima da sua melhor versão."
+            </p>
+            <div id="motivationDate" class="motivation-date">
+                <i class="far fa-calendar"></i>
+                <span>Motivação do dia</span>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para trocar foto -->
+    <div id="photoModal" class="modal">
+        <div class="modal-content">
+            <h2 style="font-family: 'Oswald', sans-serif; color: white; margin-bottom: 20px; text-align: center;">Escolha sua foto</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
+                <div class="photo-option" data-photo="1" style="background: linear-gradient(45deg, #e83e8c, #6f42c1); width: 100px; height: 100px; border-radius: 50%; cursor: pointer; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; border: 3px solid transparent; transition: all 0.3s ease;">A</div>
+                <div class="photo-option" data-photo="2" style="background: linear-gradient(45deg, #20c997, #17a2b8); width: 100px; height: 100px; border-radius: 50%; cursor: pointer; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; border: 3px solid transparent; transition: all 0.3s ease;">A</div>
+                <div class="photo-option" data-photo="3" style="background: linear-gradient(45deg, #ffc107, #fd7e14); width: 100px; height: 100px; border-radius: 50%; cursor: pointer; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; border: 3px solid transparent; transition: all 0.3s ease;">A</div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button id="confirmPhoto" style="background: linear-gradient(to right, var(--accent-pink), var(--accent-purple)); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">Confirmar</button>
+                <button id="cancelPhoto" style="background: rgba(255, 255, 255, 0.1); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==============================
+        // DADOS DO SISTEMA - ATUALIZADO PARA FOCO EM GLÚTEOS
+        // ==============================
+
+        const WEEKLY_TRAINING = {
+            monday: {
+                day: "SEGUNDA",
+                status: "active",
+                muscles: "GLÚTEOS + POSTERIOR",
+                exercises: [
+                    { id: 1, name: "Agachamento Sumô", sets: "4x10-12", completed: false, notes: "Foco na abertura do quadril" },
+                    { id: 2, name: "Hip Thrust", sets: "5x8-10", completed: false, notes: "Pico de contração no topo" },
+                    { id: 3, name: "Elevação Pélvica Unilateral", sets: "3x12-15", completed: false, notes: "Cada perna" },
+                    { id: 4, name: "Stiff", sets: "4x10-12", completed: false, notes: "Mantém costas retas" },
+                    { id: 5, name: "Cadeira Flexora", sets: "3x12-15", completed: false, notes: "Contração máxima" },
+                    { id: 6, name: "Abdução na Máquina", sets: "4x15-20", completed: false, notes: "Glúteo médio" }
+                ]
+            },
+            tuesday: {
+                day: "TERÇA",
+                status: "pending",
+                muscles: "SUPERIOR + CARDIO",
+                exercises: [
+                    { id: 7, name: "Supino Inclinado", sets: "4x8-12", completed: false, notes: "Peito superior" },
+                    { id: 8, name: "Desenvolvimento Militar", sets: "3x10-12", completed: false, notes: "Ombro" },
+                    { id: 9, name: "Remada Curvada", sets: "4x8-10", completed: false, notes: "Costas espessura" },
+                    { id: 10, name: "Elevação Lateral", sets: "3x12-15", completed: false, notes: "Ombro lateral" },
+                    { id: 11, name: "Cardio: Bike 45min", sets: "Zona 2", completed: false, notes: "Queima de gordura" }
+                ]
+            },
+            wednesday: {
+                day: "QUARTA",
+                status: "pending",
+                muscles: "GLÚTEOS + QUADRÍCEPS",
+                exercises: [
+                    { id: 12, name: "Agachamento Livre", sets: "4x8-10", completed: false, notes: "Profundidade total" },
+                    { id: 13, name: "Leg Press Pés Altos", sets: "4x10-12", completed: false, notes: "Foco glúteos" },
+                    { id: 14, name: "Afundo Bulgariano", sets: "3x10-12", completed: false, notes: "Cada perna" },
+                    { id: 15, name: "Cadeira Extensora", sets: "4x12-15", completed: false, notes: "Quadríceps" },
+                    { id: 16, name: "Glúteo na Polia", sets: "3x15-20", completed: false, notes: "Chute para trás" },
+                    { id: 17, name: "Panturrilha", sets: "4x15-20", completed: false, notes: "Em pé" }
+                ]
+            },
+            thursday: {
+                day: "QUINTA",
+                status: "pending",
+                muscles: "COSTAS + BÍCEPS",
+                exercises: [
+                    { id: 18, name: "Barra Fixa Assistida", sets: "4x6-8", completed: false, notes: "Costas largura" },
+                    { id: 19, name: "Pulldown Frente", sets: "4x8-10", completed: false, notes: "Costas" },
+                    { id: 20, name: "Remada Baixa", sets: "3x10-12", completed: false, notes: "Costas espessura" },
+                    { id: 21, name: "Rosca Direta", sets: "4x8-12", completed: false, notes: "Bíceps" },
+                    { id: 22, name: "Rosca Martelo", sets: "3x10-12", completed: false, notes: "Bíceps e antebraço" },
+                    { id: 23, name: "Abdominal Infra", sets: "3x15-20", completed: false, notes: "Core" }
+                ]
+            },
+            friday: {
+                day: "SEXTA",
+                status: "pending",
+                muscles: "GLÚTEOS + POSTERIOR",
+                exercises: [
+                    { id: 24, name: "Hip Thrust Máquina", sets: "5x8-10", completed: false, notes: "Carga pesada" },
+                    { id: 25, name: "Agachamento Búlgaro", sets: "3x10-12", completed: false, notes: "Cada perna" },
+                    { id: 26, name: "Levantamento Terra Sumô", sets: "4x6-8", completed: false, notes: "Posterior e glúteos" },
+                    { id: 27, name: "Mesa Flexora", sets: "4x10-12", completed: false, notes: "Posterior" },
+                    { id: 28, name: "Abdução com Elástico", sets: "3x20-25", completed: false, notes: "Glúteo médio" },
+                    { id: 29, name: "Elevação Pélvica Ponte", sets: "3x15-20", completed: false, notes: "Isometria" }
+                ]
+            },
+            saturday: {
+                day: "SÁBADO",
+                status: "pending",
+                muscles: "DELTÓIDES + CARDIO",
+                exercises: [
+                    { id: 30, name: "Desenvolvimento Arnold", sets: "4x8-12", completed: false, notes: "Ombro completo" },
+                    { id: 31, name: "Elevação Frontal", sets: "3x10-12", completed: false, notes: "Deltóide anterior" },
+                    { id: 32, name: "Elevação Lateral Inclinada", sets: "3x12-15", completed: false, notes: "Deltóide lateral" },
+                    { id: 33, name: "Encolhimento", sets: "3x10-12", completed: false, notes: "Trapézio" },
+                    { id: 34, name: "Cardio: Esteira Inclinada", sets: "30min Zona 2", completed: false, notes: "Queima de gordura" }
+                ]
+            },
+            sunday: {
+                day: "DOMINGO",
+                status: "completed",
+                muscles: "DESCANSO ATIVO",
+                exercises: [
+                    { id: 35, name: "Alongamento Glúteos", sets: "20min", completed: false, notes: "Mobilidade" },
+                    { id: 36, name: "Foam Rolling", sets: "15min", completed: false, notes: "Liberação miofascial" },
+                    { id: 37, name: "Caminhada Leve", sets: "45min", completed: false, notes: "Recuperação ativa" }
+                ]
+            }
+        };
+
+        const DAILY_CHECKLIST = [
+            { id: 50, title: "6.0L de Água", icon: "fas fa-tint", progress: 75, completed: false, target: 1, current: 0.75, description: "Hidratação premium para esteroides" },
+            { id: 51, title: "200g Proteína", icon: "fas fa-drumstick-bite", progress: 90, completed: false, target: 1, current: 0.9, description: "2.0-2.2g/kg para qualidade muscular" },
+            { id: 52, title: "7 Refeições", icon: "fas fa-utensils", progress: 85, completed: false, target: 1, current: 0.85, description: "Frequência para síntese proteica" },
+            { id: 53, title: "Treino Glúteos", icon: "fas fa-dumbbell", progress: 95, completed: false, target: 1, current: 0.95, description: "Foco em desenvolvimento glúteo" },
+            { id: 54, title: "Suplementação Completa", icon: "fas fa-capsules", progress: 80, completed: false, target: 1, current: 0.8, description: "Inclui Saw Palmetto para beleza" },
+            { id: 55, title: "8-9h Sono", icon: "fas fa-bed", progress: 70, completed: false, target: 1, current: 0.7, description: "Crítico com uso de hormônios" },
+            { id: 56, title: "Hormonização", icon: "fas fa-syringe", progress: 100, completed: true, target: 1, current: 1, description: "Testosterona gel aplicada" },
+            { id: 57, title: "Recuperação Ativa", icon: "fas fa-spa", progress: 60, completed: false, target: 1, current: 0.6, description: "Alongamento e mobilidade" }
+        ];
+
+        const MOTIVATIONAL_MESSAGES = [
+            "A disciplina de hoje é o palco de amanhã. Cada escolha certa te aproxima da sua melhor versão.",
+            "Glúteos de aço são forjados na academia, mas esculpidos na cozinha. Foco no prato!",
+            "36 anos é a nova idade de ouro para o físico bikini - experiência + disciplina = resultados extraordinários.",
+            "Cada gota de suor nos glúteos é um passo em direção ao palco. Continue empurrando!",
+            "Musculação feminina é a arte de criar curvas com força, definição com graça, poder com feminilidade.",
+            "O limite é uma ilusão criada pela mente que ainda não descobriu sua própria força. Quebre-o com elegância.",
+            "Ser atleta bikini é dominar a arte da proporção: força nos lugares certos, suavidade nas curvas perfeitas.",
+            "Não importa o peso na barra, importa a precisão do movimento. A qualidade sempre vence a quantidade."
+        ];
+
+        // ==============================
+        // SISTEMA PRINCIPAL
+        // ==============================
+
+        class AmandaProSystem {
+            constructor() {
+                this.currentUser = null;
+                this.trainingData = {};
+                this.checklistData = [];
+                this.nutritionData = {};
+                this.measuresData = {};
+                this.hormonesData = {};
+                this.supplementsData = {};
+                this.sleepData = {};
+                this.isAuthenticated = false;
+                
+                this.init();
+            }
+            
+            init() {
+                console.log('🔧 Inicializando AMANDA PRO Sistema Elite...');
+                this.setupEventListeners();
+                this.checkAuthentication();
+                this.setupAutoSave();
+            }
+            
+            checkAuthentication() {
+                const session = localStorage.getItem('amanda_pro_session');
+                if (session) {
+                    this.currentUser = JSON.parse(session);
+                    this.isAuthenticated = true;
+                    this.showMainApp();
+                    this.loadAllData();
+                } else {
+                    this.showLogin();
+                }
+            }
+            
+            login(username, password) {
+                if (username === "amanda" && password === "pro123") {
+                    const userData = {
+                        id: 1,
+                        username: username,
+                        name: "AMANDA",
+                        email: "amanda@pro.com",
+                        photo: "1",
+                        phase: "BULKING QUALIDADE • BIKINI MARÇO 2024",
+                        age: 36,
+                        weight: 68.5,
+                        height: 165,
+                        steroidUse: true,
+                        lastLogin: new Date().toISOString()
+                    };
+                    
+                    localStorage.setItem('amanda_pro_session', JSON.stringify(userData));
+                    this.currentUser = userData;
+                    this.isAuthenticated = true;
+                    this.showMainApp();
+                    this.loadAllData();
+                    
+                    this.showNotification("Login realizado com sucesso!", "success");
+                    return true;
+                }
+                
+                this.showNotification("Credenciais inválidas!", "error");
+                return false;
+            }
+            
+            logout() {
+                localStorage.removeItem('amanda_pro_session');
+                this.currentUser = null;
+                this.isAuthenticated = false;
+                this.showLogin();
+                this.showNotification("Logout realizado!", "info");
+            }
+            
+            showLogin() {
+                document.getElementById('loginModal').style.display = 'flex';
+                document.getElementById('mainContainer').style.display = 'none';
+            }
+            
+            showMainApp() {
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                this.updateUI();
+            }
+            
+            updateUI() {
+                this.updateCurrentDate();
+                
+                if (this.currentUser) {
+                    document.getElementById('athleteName').textContent = this.currentUser.name;
+                    document.getElementById('phaseText').textContent = this.currentUser.phase;
+                    this.updateProfilePhoto(this.currentUser.photo);
+                    
+                    // Preencher dados do usuário nos inputs
+                    if (this.currentUser.weight) document.getElementById('userWeight').value = this.currentUser.weight;
+                    if (this.currentUser.height) document.getElementById('userHeight').value = this.currentUser.height;
+                    if (this.currentUser.steroidUse) document.getElementById('steroidUse').value = this.currentUser.steroidUse;
+                }
+                
+                this.loadTrainingData();
+                this.loadChecklistData();
+                this.loadNutritionData();
+                this.loadMeasuresData();
+                this.loadHormonesData();
+                this.loadSupplementsData();
+                this.loadSleepData();
+                this.loadMotivation();
+                
+                // Calcular água inicial
+                this.calculateWaterRequirement();
+            }
+            
+            updateCurrentDate() {
+                const now = new Date();
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+                
+                const dateStr = now.toLocaleDateString('pt-BR', options);
+                document.getElementById('currentDate').textContent = dateStr;
+                
+                // Atualizar progresso da semana
+                const weekNumber = Math.floor((now.getDate() - 1) / 7) + 1;
+                const totalWeeks = 12;
+                const weekProgress = Math.round((weekNumber / totalWeeks) * 100);
+                document.getElementById('weekProgress').textContent = 
+                    `Semana ${weekNumber} de ${totalWeeks} • Progresso: ${weekProgress}%`;
+            }
+            
+            updateProfilePhoto(photoId) {
+                const profilePic = document.getElementById('profilePic');
+                const colors = [
+                    'linear-gradient(45deg, #e83e8c, #6f42c1)',
+                    'linear-gradient(45deg, #20c997, #17a2b8)',
+                    'linear-gradient(45deg, #ffc107, #fd7e14)'
+                ];
+                
+                const colorIndex = parseInt(photoId) - 1;
+                if (colorIndex >= 0 && colorIndex < colors.length) {
+                    profilePic.style.background = colors[colorIndex];
+                }
+                
+                if (this.currentUser) {
+                    this.currentUser.photo = photoId;
+                    localStorage.setItem('amanda_pro_session', JSON.stringify(this.currentUser));
+                }
+            }
+            
+            // ==============================
+            // CÁLCULO DE ÁGUA PARA ESTEROIDES
+            // ==============================
+            
+            calculateWaterRequirement() {
+                const weight = parseFloat(document.getElementById('userWeight').value) || 68.5;
+                const height = parseFloat(document.getElementById('userHeight').value) || 165;
+                const steroidUse = document.getElementById('steroidUse').value === 'true';
+                
+                // Fórmula base: 35ml por kg de peso
+                let baseWater = weight * 0.035; // em litros
+                
+                // Ajuste para altura (para cada 10cm acima de 160, +0.1L)
+                if (height > 160) {
+                    baseWater += ((height - 160) / 10) * 0.1;
+                }
+                
+                // Ajuste para esteroides: +30% para proteção renal
+                if (steroidUse) {
+                    baseWater *= 1.3;
+                }
+                
+                // Arredondar para 0.5L mais próximo
+                const recommendedWater = Math.round(baseWater * 2) / 2;
+                
+                // Atualizar UI
+                document.getElementById('waterRecommendation').textContent = `${recommendedWater}L por dia`;
+                document.getElementById('waterResult').style.display = 'flex';
+                
+                // Atualizar input de água
+                document.getElementById('waterInput').value = recommendedWater;
+                
+                // Atualizar checklist
+                const waterItem = this.checklistData.find(item => item.title.includes("Água"));
+                if (waterItem) {
+                    waterItem.title = `${recommendedWater}L de Água`;
+                    waterItem.target = recommendedWater;
+                    this.saveChecklistData();
+                    this.renderChecklist();
+                }
+                
+                // Salvar no usuário
+                if (this.currentUser) {
+                    this.currentUser.waterRecommendation = recommendedWater;
+                    localStorage.setItem('amanda_pro_session', JSON.stringify(this.currentUser));
+                }
+                
+                this.showNotification(`Água calculada: ${recommendedWater}L/dia (${steroidUse ? 'com extra para esteroides' : 'normal'})`, "info");
+            }
+            
+            // ==============================
+            // SISTEMA DE TREINO COM FOCO EM GLÚTEOS
+            // ==============================
+            
+            loadTrainingData() {
+                const saved = localStorage.getItem('amanda_training_data');
+                if (saved) {
+                    this.trainingData = JSON.parse(saved);
+                } else {
+                    this.trainingData = WEEKLY_TRAINING;
+                    this.saveTrainingData();
+                }
+                
+                this.renderTrainingGrid();
+            }
+            
+            saveTrainingData() {
+                localStorage.setItem('amanda_training_data', JSON.stringify(this.trainingData));
+            }
+            
+            renderTrainingGrid() {
+                const trainingWeek = document.getElementById('trainingWeek');
+                trainingWeek.innerHTML = '';
+                
+                const today = new Date().getDay();
+                const dayMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                const todayKey = dayMap[today];
+                
+                Object.keys(this.trainingData).forEach(dayKey => {
+                    const day = this.trainingData[dayKey];
+                    const isToday = dayKey === todayKey;
+                    const isCompleted = day.status === 'completed';
+                    
+                    const totalExercises = day.exercises.length;
+                    const completedExercises = day.exercises.filter(ex => ex.completed).length;
+                    const progress = totalExercises > 0 ? Math.round((completedExercises / totalExercises) * 100) : 0;
+                    
+                    const dayCard = document.createElement('div');
+                    dayCard.className = `day-card ${isToday ? 'active' : ''}`;
+                    dayCard.innerHTML = `
+                        <div class="day-header">
+                            <div class="day-name">${day.day}</div>
+                            <div class="day-status ${isCompleted ? 'completed' : isToday ? 'active' : ''}"></div>
+                        </div>
+                        <div class="muscle-groups">
+                            <span class="muscle-tag">${day.muscles}</span>
+                            <span class="muscle-tag" style="background: rgba(32, 201, 151, 0.2); color: var(--accent-teal);">
+                                ${progress}% Completo
+                            </span>
+                        </div>
+                        <ul class="exercises-list">
+                            ${day.exercises.map((exercise, index) => `
+                                <li class="exercise-item ${exercise.completed ? 'completed' : ''}" 
+                                    style="${exercise.completed ? 'background: rgba(32, 201, 151, 0.05);' : ''}">
+                                    <span class="exercise-name">${exercise.name}</span>
+                                    <span class="exercise-sets">${exercise.sets}</span>
+                                    <div class="exercise-actions">
+                                        <button class="edit-btn" onclick="amandaPro.editExercise('${dayKey}', ${exercise.id})">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="complete-btn ${exercise.completed ? 'completed' : ''}" 
+                                                onclick="amandaPro.toggleExerciseComplete('${dayKey}', ${exercise.id})">
+                                            <i class="fas ${exercise.completed ? 'fa-check' : 'fa-check'}"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+                    
+                    trainingWeek.appendChild(dayCard);
+                });
+            }
+            
+            toggleExerciseComplete(dayKey, exerciseId) {
+                const exercise = this.trainingData[dayKey].exercises.find(ex => ex.id === exerciseId);
+                if (exercise) {
+                    exercise.completed = !exercise.completed;
+                    
+                    // Verificar se todos os exercícios do dia estão completos
+                    const allCompleted = this.trainingData[dayKey].exercises.every(ex => ex.completed);
+                    if (allCompleted) {
+                        this.trainingData[dayKey].status = 'completed';
+                    }
+                    
+                    this.saveTrainingData();
+                    this.renderTrainingGrid();
+                    
+                    // Atualizar checklist de treino
+                    const trainItem = this.checklistData.find(item => item.title.includes("Treino"));
+                    if (trainItem) {
+                        const today = new Date().getDay();
+                        const dayMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                        const todayKey = dayMap[today];
+                        
+                        if (dayKey === todayKey) {
+                            const totalExercises = this.trainingData[todayKey].exercises.length;
+                            const completedExercises = this.trainingData[todayKey].exercises.filter(ex => ex.completed).length;
+                            trainItem.progress = Math.round((completedExercises / totalExercises) * 100);
+                            trainItem.completed = trainItem.progress >= 90;
+                            this.saveChecklistData();
+                            this.renderChecklist();
+                        }
+                    }
+                    
+                    this.showNotification(`Exercício ${exercise.completed ? 'concluído' : 'pendente'}!`, "success");
+                }
+            }
+            
+            // ==============================
+            // SISTEMA DE CHECKLIST
+            // ==============================
+            
+            loadChecklistData() {
+                const saved = localStorage.getItem('amanda_checklist_data');
+                if (saved) {
+                    this.checklistData = JSON.parse(saved);
+                } else {
+                    this.checklistData = DAILY_CHECKLIST;
+                    this.saveChecklistData();
+                }
+                
+                this.renderChecklist();
+            }
+            
+            saveChecklistData() {
+                localStorage.setItem('amanda_checklist_data', JSON.stringify(this.checklistData));
+            }
+            
+            renderChecklist() {
+                const checklistGrid = document.getElementById('checklistGrid');
+                checklistGrid.innerHTML = '';
+                
+                this.checklistData.forEach(item => {
+                    const checklistItem = document.createElement('div');
+                    checklistItem.className = `checklist-item ${item.completed ? 'completed' : ''}`;
+                    checklistItem.innerHTML = `
+                        <div class="check-icon ${item.completed ? 'completed' : ''}" 
+                             onclick="amandaPro.toggleChecklistItem(${item.id})"></div>
+                        <div class="checklist-content">
+                            <div class="checklist-title">
+                                <i class="${item.icon}"></i>
+                                <span>${item.title}</span>
+                            </div>
+                            <div class="checklist-progress">
+                                <div class="progress-fill" style="width: ${item.progress}%"></div>
+                            </div>
+                            <small style="color: #aaa; font-size: 0.8rem; margin-top: 5px;">${item.description}</small>
+                        </div>
+                    `;
+                    
+                    checklistGrid.appendChild(checklistItem);
+                });
+            }
+            
+            toggleChecklistItem(itemId) {
+                const item = this.checklistData.find(i => i.id === itemId);
+                if (item) {
+                    item.completed = !item.completed;
+                    item.progress = item.completed ? 100 : 0;
+                    this.saveChecklistData();
+                    this.renderChecklist();
+                    this.showNotification(`Item ${item.completed ? 'concluído' : 'pendente'}!`, "success");
+                }
+            }
+            
+            // ==============================
+            // SISTEMA DE DADOS
+            // ==============================
+            
+            loadNutritionData() {
+                const saved = localStorage.getItem('amanda_nutrition_data');
+                if (saved) {
+                    this.nutritionData = JSON.parse(saved);
+                    document.getElementById('waterInput').value = this.nutritionData.water || '';
+                    document.getElementById('proteinInput').value = this.nutritionData.protein || '';
+                    document.getElementById('carbsInput').value = this.nutritionData.carbs || '';
+                    document.getElementById('mealsInput').value = this.nutritionData.meals || '7';
+                }
+            }
+            
+            saveNutritionData() {
+                const data = {
+                    water: document.getElementById('waterInput').value,
+                    protein: document.getElementById('proteinInput').value,
+                    carbs: document.getElementById('carbsInput').value,
+                    meals: document.getElementById('mealsInput').value,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.nutritionData = data;
+                localStorage.setItem('amanda_nutrition_data', JSON.stringify(data));
+                
+                // Atualizar checklist
+                this.updateChecklistFromNutrition(data);
+                this.showNotification("Dados nutricionais salvos!", "success");
+            }
+            
+            updateChecklistFromNutrition(nutritionData) {
+                // Atualizar item de água
+                const waterItem = this.checklistData.find(item => item.title.includes("Água"));
+                if (waterItem && nutritionData.water) {
+                    const targetWater = parseFloat(waterItem.target);
+                    const currentWater = parseFloat(nutritionData.water);
+                    waterItem.progress = Math.min(Math.round((currentWater / targetWater) * 100), 100);
+                    waterItem.completed = waterItem.progress >= 90;
+                }
+                
+                // Atualizar item de proteína
+                const proteinItem = this.checklistData.find(item => item.title.includes("Proteína"));
+                if (proteinItem && nutritionData.protein) {
+                    const targetProtein = 200;
+                    const currentProtein = parseInt(nutritionData.protein);
+                    proteinItem.progress = Math.min(Math.round((currentProtein / targetProtein) * 100), 100);
+                    proteinItem.completed = proteinItem.progress >= 90;
+                }
+                
+                // Atualizar item de refeições
+                const mealsItem = this.checklistData.find(item => item.title.includes("Refeições"));
+                if (mealsItem && nutritionData.meals) {
+                    const targetMeals = 7;
+                    const currentMeals = parseInt(nutritionData.meals);
+                    mealsItem.progress = Math.min(Math.round((currentMeals / targetMeals) * 100), 100);
+                    mealsItem.completed = mealsItem.progress >= 85;
+                }
+                
+                this.saveChecklistData();
+                this.renderChecklist();
+            }
+            
+            loadMeasuresData() {
+                const saved = localStorage.getItem('amanda_measures_data');
+                if (saved) {
+                    this.measuresData = JSON.parse(saved);
+                    document.getElementById('weightInput').value = this.measuresData.weight || '';
+                    document.getElementById('fatInput').value = this.measuresData.fat || '';
+                    document.getElementById('waistInput').value = this.measuresData.waist || '';
+                    document.getElementById('hipInput').value = this.measuresData.hip || '';
+                    document.getElementById('glutesInput').value = this.measuresData.glutes || '';
+                    document.getElementById('thighInput').value = this.measuresData.thigh || '';
+                }
+            }
+            
+            saveMeasuresData() {
+                const data = {
+                    weight: document.getElementById('weightInput').value,
+                    fat: document.getElementById('fatInput').value,
+                    waist: document.getElementById('waistInput').value,
+                    hip: document.getElementById('hipInput').value,
+                    glutes: document.getElementById('glutesInput').value,
+                    thigh: document.getElementById('thighInput').value,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.measuresData = data;
+                localStorage.setItem('amanda_measures_data', JSON.stringify(data));
+                this.showNotification("Medidas salvas! Foco no crescimento glúteo!", "success");
+            }
+            
+            loadHormonesData() {
+                const saved = localStorage.getItem('amanda_hormones_data');
+                if (saved) {
+                    this.hormonesData = JSON.parse(saved);
+                    document.getElementById('hormoneType').value = this.hormonesData.type || 'testosterone_gel';
+                    document.getElementById('hormoneDose').value = this.hormonesData.dose || '50.0';
+                    document.getElementById('hormoneTime').value = this.hormonesData.time || '08:00';
+                    document.getElementById('applicationSite').value = this.hormonesData.site || 'shoulders';
+                    document.getElementById('sideEffects').value = this.hormonesData.sideEffects || 'none';
+                }
+            }
+            
+            saveHormoneData() {
+                const data = {
+                    type: document.getElementById('hormoneType').value,
+                    dose: document.getElementById('hormoneDose').value,
+                    time: document.getElementById('hormoneTime').value,
+                    site: document.getElementById('applicationSite').value,
+                    sideEffects: document.getElementById('sideEffects').value,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.hormonesData = data;
+                localStorage.setItem('amanda_hormones_data', JSON.stringify(data));
+                this.showNotification("Hormonização registrada! Segurança em primeiro lugar!", "success");
+            }
+            
+            loadSupplementsData() {
+                const saved = localStorage.getItem('amanda_supplements_data');
+                if (saved) {
+                    this.supplementsData = JSON.parse(saved);
+                    document.getElementById('creatineInput').value = this.supplementsData.creatine || 'true';
+                    document.getElementById('liverInput').value = this.supplementsData.liver || 'true';
+                    document.getElementById('teaInput').value = this.supplementsData.tea || 'true';
+                    document.getElementById('omegaInput').value = this.supplementsData.omega || 'true';
+                    document.getElementById('zmaInput').value = this.supplementsData.zma || 'true';
+                }
+            }
+            
+            saveSupplementsData() {
+                const data = {
+                    creatine: document.getElementById('creatineInput').value,
+                    liver: document.getElementById('liverInput').value,
+                    tea: document.getElementById('teaInput').value,
+                    omega: document.getElementById('omegaInput').value,
+                    zma: document.getElementById('zmaInput').value,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.supplementsData = data;
+                localStorage.setItem('amanda_supplements_data', JSON.stringify(data));
+                
+                // Atualizar checklist
+                const supplementItem = this.checklistData.find(item => item.title.includes("Suplementação"));
+                if (supplementItem) {
+                    const takenCount = [data.creatine, data.liver, data.tea, data.omega, data.zma]
+                        .filter(val => val === 'true').length;
+                    supplementItem.progress = Math.round((takenCount / 5) * 100);
+                    supplementItem.completed = supplementItem.progress >= 80;
+                    this.saveChecklistData();
+                    this.renderChecklist();
+                }
+                
+                this.showNotification("Suplementação registrada! O chá vai fazer maravilhas! ✨", "success");
+            }
+            
+            loadSleepData() {
+                const saved = localStorage.getItem('amanda_sleep_data');
+                if (saved) {
+                    this.sleepData = JSON.parse(saved);
+                    document.getElementById('sleepHoursInput').value = this.sleepData.hours || '8.0';
+                    document.getElementById('sleepQualityInput').value = this.sleepData.quality || '8';
+                    document.getElementById('stressInput').value = this.sleepData.stress || '3';
+                    document.getElementById('recoveryInput').value = this.sleepData.recovery || 'true';
+                }
+            }
+            
+            saveSleepData() {
+                const data = {
+                    hours: document.getElementById('sleepHoursInput').value,
+                    quality: document.getElementById('sleepQualityInput').value,
+                    stress: document.getElementById('stressInput').value,
+                    recovery: document.getElementById('recoveryInput').value,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.sleepData = data;
+                localStorage.setItem('amanda_sleep_data', JSON.stringify(data));
+                
+                // Atualizar checklist
+                const sleepItem = this.checklistData.find(item => item.title.includes("Sono"));
+                if (sleepItem && data.hours) {
+                    const sleepHours = parseFloat(data.hours);
+                    sleepItem.progress = Math.min(Math.round((sleepHours / 8.5) * 100), 100);
+                    sleepItem.completed = sleepItem.progress >= 80;
+                }
+                
+                const recoveryItem = this.checklistData.find(item => item.title.includes("Recuperação"));
+                if (recoveryItem) {
+                    recoveryItem.progress = data.recovery === 'true' ? 100 : 50;
+                    recoveryItem.completed = data.recovery === 'true';
+                }
+                
+                this.saveChecklistData();
+                this.renderChecklist();
+                this.showNotification("Dados de sono salvos! O descanso é seu superpoder!", "success");
+            }
+            
+            loadMotivation() {
+                const today = new Date().toDateString();
+                const lastMotivation = localStorage.getItem('amanda_last_motivation');
+                
+                if (lastMotivation) {
+                    const data = JSON.parse(lastMotivation);
+                    if (data.date === today) {
+                        document.getElementById('motivationText').textContent = `"${data.message}"`;
+                        return;
+                    }
+                }
+                
+                const randomIndex = Math.floor(Math.random() * MOTIVATIONAL_MESSAGES.length);
+                const message = MOTIVATIONAL_MESSAGES[randomIndex];
+                
+                document.getElementById('motivationText').textContent = `"${message}"`;
+                
+                localStorage.setItem('amanda_last_motivation', JSON.stringify({
+                    date: today,
+                    message: message
+                }));
+            }
+            
+            // ==============================
+            // FUNÇÕES AUXILIARES
+            // ==============================
+            
+            showNotification(message, type = "success") {
+                const notification = document.getElementById('notification');
+                const notificationText = document.getElementById('notificationText');
+                
+                notification.className = 'notification';
+                notification.classList.add('show');
+                
+                const icons = {
+                    success: 'fa-check-circle',
+                    error: 'fa-exclamation-circle',
+                    warning: 'fa-exclamation-triangle',
+                    info: 'fa-info-circle'
+                };
+                
+                notification.querySelector('i').className = `fas ${icons[type] || icons.success}`;
+                notificationText.textContent = message;
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            setupEventListeners() {
+                // Login
+                document.getElementById('loginBtn').addEventListener('click', () => {
+                    const username = document.getElementById('loginUsername').value;
+                    const password = document.getElementById('loginPassword').value;
+                    this.login(username, password);
+                });
+                
+                document.getElementById('loginPassword').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        const username = document.getElementById('loginUsername').value;
+                        const password = document.getElementById('loginPassword').value;
+                        this.login(username, password);
+                    }
+                });
+                
+                // Cálculo de água
+                document.getElementById('calculateWaterBtn').addEventListener('click', () => {
+                    this.calculateWaterRequirement();
+                });
+                
+                // Tabs de dados
+                document.querySelectorAll('.data-tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        document.querySelectorAll('.data-tab').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.data-content').forEach(c => c.classList.remove('active'));
+                        
+                        tab.classList.add('active');
+                        const tabId = tab.getAttribute('data-tab');
+                        document.getElementById(`${tabId}Content`).classList.add('active');
+                    });
+                });
+                
+                // Modal de foto
+                document.getElementById('changePhotoBtn').addEventListener('click', () => {
+                    document.getElementById('photoModal').style.display = 'flex';
+                });
+                
+                document.getElementById('cancelPhoto').addEventListener('click', () => {
+                    document.getElementById('photoModal').style.display = 'none';
+                });
+                
+                document.getElementById('confirmPhoto').addEventListener('click', () => {
+                    const selected = document.querySelector('.photo-option.selected');
+                    if (selected) {
+                        const photoId = selected.getAttribute('data-photo');
+                        this.updateProfilePhoto(photoId);
+                        document.getElementById('photoModal').style.display = 'none';
+                        this.showNotification("Foto alterada com sucesso!", "success");
+                    }
+                });
+                
+                // Seleção de fotos
+                document.querySelectorAll('.photo-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        document.querySelectorAll('.photo-option').forEach(o => {
+                            o.style.border = '3px solid transparent';
+                        });
+                        option.style.border = '3px solid var(--accent-gold)';
+                        option.classList.add('selected');
+                    });
+                });
+                
+                // Fechar modais
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.style.display = 'none';
+                        }
+                    });
+                });
+                
+                // Botão de adicionar exercício
+                document.getElementById('addExerciseBtn').addEventListener('click', () => {
+                    this.showDaySelectionModal();
+                });
+                
+                // Botão de adicionar item ao checklist
+                document.getElementById('addChecklistItemBtn').addEventListener('click', () => {
+                    this.showEditChecklistModal();
+                });
+            }
+            
+            setupAutoSave() {
+                setInterval(() => {
+                    this.saveAllData();
+                }, 30000);
+                
+                setInterval(() => {
+                    this.updateCurrentDate();
+                }, 60000);
+            }
+            
+            saveAllData() {
+                const activeTab = document.querySelector('.data-tab.active');
+                if (activeTab) {
+                    const tabId = activeTab.getAttribute('data-tab');
+                    switch(tabId) {
+                        case 'nutrition': this.saveNutritionData(); break;
+                        case 'measures': this.saveMeasuresData(); break;
+                        case 'hormones': this.saveHormoneData(); break;
+                        case 'supplements': this.saveSupplementsData(); break;
+                        case 'sleep': this.saveSleepData(); break;
+                    }
+                }
+            }
+            
+            loadAllData() {
+                this.loadTrainingData();
+                this.loadChecklistData();
+                this.loadNutritionData();
+                this.loadMeasuresData();
+                this.loadHormonesData();
+                this.loadSupplementsData();
+                this.loadSleepData();
+                this.loadMotivation();
+            }
+            
+            // ==============================
+            // MODAIS DE EDIÇÃO
+            // ==============================
+            
+            showDaySelectionModal() {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h2 style="font-family: 'Oswald', sans-serif; color: white; margin-bottom: 20px; text-align: center;">Selecionar Dia</h2>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
+                            ${Object.keys(this.trainingData).map(dayKey => `
+                                <button class="day-option" data-day="${dayKey}" 
+                                        style="padding: 15px; background: rgba(255, 255, 255, 0.05); border: 2px solid transparent; border-radius: 10px; color: white; cursor: pointer; transition: all 0.3s ease;">
+                                    ${this.trainingData[dayKey].day}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button id="cancelDayBtn" style="background: rgba(255, 255, 255, 0.1); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer;">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                modal.style.display = 'flex';
+                
+                modal.querySelectorAll('.day-option').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const dayKey = btn.dataset.day;
+                        modal.remove();
+                        this.showEditExerciseModal(dayKey);
+                    });
+                });
+                
+                modal.querySelector('#cancelDayBtn').addEventListener('click', () => {
+                    modal.remove();
+                });
+            }
+            
+            editExercise(dayKey, exerciseId) {
+                const exercise = this.trainingData[dayKey].exercises.find(ex => ex.id === exerciseId);
+                if (exercise) {
+                    this.showEditExerciseModal(dayKey, exercise);
+                }
+            }
+            
+            showEditExerciseModal(dayKey, exercise = null) {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h2 style="font-family: 'Oswald', sans-serif; color: white; margin-bottom: 20px; text-align: center;">
+                            ${exercise ? 'Editar Exercício' : 'Novo Exercício'}
+                        </h2>
+                        <div style="margin-bottom: 20px;">
+                            <div class="input-group">
+                                <label>Nome do Exercício</label>
+                                <input type="text" id="editExerciseName" 
+                                       value="${exercise ? exercise.name : ''}" 
+                                       placeholder="Ex: Hip Thrust">
+                            </div>
+                            <div class="input-group">
+                                <label>Séries e Repetições</label>
+                                <input type="text" id="editExerciseSets" 
+                                       value="${exercise ? exercise.sets : '4x8-12'}" 
+                                       placeholder="Ex: 4x8-12">
+                            </div>
+                            <div class="input-group">
+                                <label>Notas (opcional)</label>
+                                <textarea id="editExerciseNotes" 
+                                          placeholder="Dicas, ajustes..." rows="3">${exercise ? exercise.notes || '' : ''}</textarea>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button id="saveExerciseBtn" style="background: linear-gradient(to right, var(--accent-pink), var(--accent-purple)); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer;">
+                                ${exercise ? 'Atualizar' : 'Adicionar'}
+                            </button>
+                            ${exercise ? `
+                            <button id="deleteExerciseBtn" style="background: linear-gradient(to right, var(--accent-danger), #c82333); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer;">
+                                <i class="fas fa-trash"></i> Excluir
+                            </button>
+                            ` : ''}
+                            <button id="cancelEditBtn" style="background: rgba(255, 255, 255, 0.1); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer;">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                modal.style.display = 'flex';
+                
+                modal.querySelector('#saveExerciseBtn').addEventListener('click', () => {
+                    const name = document.getElementById('editExerciseName').value;
+                    const sets = document.getElementById('editExerciseSets').value;
+                    const notes = document.getElementById('editExerciseNotes').value;
+                    
+                    if (name && sets) {
+                        if (exercise) {
+                            exercise.name = name;
+                            exercise.sets = sets;
+                            exercise.notes = notes;
+                            this.saveTrainingData();
+                            this.renderTrainingGrid();
+                            this.showNotification('Exercício atualizado!', 'success');
+                        } else {
+                            if (!this.trainingData[dayKey]) {
+                                this.trainingData[dayKey] = {
+                                    day: dayKey.toUpperCase(),
+                                    muscles: "NOVO GRUPO MUSCULAR",
+                                    exercises: []
+                                };
+                            }
+                            
+                            this.trainingData[dayKey].exercises.push({
+                                id: Date.now(),
+                                name: name,
+                                sets: sets,
+                                completed: false,
+                                notes: notes
+                            });
+                            
+                            this.saveTrainingData();
+                            this.renderTrainingGrid();
+                            this.showNotification('Exercício adicionado!', 'success');
+                        }
+                        modal.remove();
+                    } else {
+                        this.showNotification('Preencha todos os campos obrigatórios', 'error');
+                    }
+                });
+                
+                if (exercise) {
+                    modal.querySelector('#deleteExerciseBtn').addEventListener('click', () => {
+                        if (confirm('Tem certeza que deseja excluir este exercício?')) {
+                            this.trainingData[dayKey].exercises = this.trainingData[dayKey].exercises.filter(ex => ex.id !== exercise.id);
+                            this.saveTrainingData();
+                            this.renderTrainingGrid();
+                            this.showNotification('Exercício excluído!', 'success');
+                            modal.remove();
+                        }
+                    });
+                }
+                
+                modal.querySelector('#cancelEditBtn').addEventListener('click', () => {
+                    modal.remove();
+                });
+            }
+            
+            showEditChecklistModal(item = null) {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h2 style="font-family: 'Oswald', sans-serif; color: white; margin-bottom: 20px; text-align: center;">
+                            ${item ? 'Editar Item' : 'Novo Item'}
+                        </h2>
+                        <div style="margin-bottom: 20px;">
+                            <div class="input-group">
+                                <label>Título do Item</label>
+                                <input type="text" id="editItemTitle" 
+                                       value="${item ? item.title : ''}" 
+                                       placeholder="Ex: Beber 5L de água">
+                            </div>
+                            <div class="input-group">
+                                <label>Descrição</label>
+                                <input type="text" id="editItemDesc" 
+                                       value="${item ? item.description : ''}" 
+                                       placeholder="Ex: Hidratação para esteroides">
+                            </div>
+                            <div class="input-group">
+                                <label>Ícone (classe FontAwesome)</label>
+                                <input type="text" id="editItemIcon" 
+                                       value="${item ? item.icon : 'fas fa-check'}" 
+                                       placeholder="fas fa-tint">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button id="saveItemBtn" style="background: linear-gradient(to right, var(--accent-pink), var(--accent-purple)); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer;">
+                                ${item ? 'Atualizar' : 'Adicionar'}
+                            </button>
+                            ${item ? `
+                            <button id="deleteItemBtn" style="background: linear-gradient(to right, var(--accent-danger), #c82333); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer;">
+                                <i class="fas fa-trash"></i> Excluir
+                            </button>
+                            ` : ''}
+                            <button id="cancelItemBtn" style="background: rgba(255, 255, 255, 0.1); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer;">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                modal.style.display = 'flex';
+                
+                modal.querySelector('#saveItemBtn').addEventListener('click', () => {
+                    const title = document.getElementById('editItemTitle').value;
+                    const description = document.getElementById('editItemDesc').value;
+                    const icon = document.getElementById('editItemIcon').value;
+                    
+                    if (title) {
+                        if (item) {
+                            item.title = title;
+                            item.description = description;
+                            item.icon = icon;
+                            this.saveChecklistData();
+                            this.renderChecklist();
+                            this.showNotification('Item atualizado!', 'success');
+                        } else {
+                            this.checklistData.push({
+                                id: Date.now(),
+                                title: title,
+                                description: description,
+                                icon: icon,
+                                progress: 0,
+                                completed: false,
+                                target: 1,
+                                current: 0
+                            });
+                            
+                            this.saveChecklistData();
+                            this.renderChecklist();
+                            this.showNotification('Item adicionado!', 'success');
+                        }
+                        modal.remove();
+                    } else {
+                        this.showNotification('Preencha o título do item', 'error');
+                    }
+                });
+                
+                if (item) {
+                    modal.querySelector('#deleteItemBtn').addEventListener('click', () => {
+                        if (confirm('Tem certeza que deseja excluir este item?')) {
+                            this.checklistData = this.checklistData.filter(i => i.id !== item.id);
+                            this.saveChecklistData();
+                            this.renderChecklist();
+                            this.showNotification('Item excluído!', 'success');
+                            modal.remove();
+                        }
+                    });
+                }
+                
+                modal.querySelector('#cancelItemBtn').addEventListener('click', () => {
+                    modal.remove();
+                });
+            }
+        }
+
+        // ==============================
+        // INICIALIZAÇÃO DO SISTEMA
+        // ==============================
+
+        let amandaPro;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            amandaPro = new AmandaProSystem();
+            
+            // Configurar atalhos
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    amandaPro.saveAllData();
+                    amandaPro.showNotification("Dados salvos!", "success");
+                }
+                
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        if (modal.style.display === 'flex') {
+                            modal.style.display = 'none';
+                        }
+                    });
+                }
+            });
+            
+            // Adicionar botão de logout
+            const logoutBtn = document.createElement('button');
+            logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Sair';
+            logoutBtn.style.position = 'fixed';
+            logoutBtn.style.top = '20px';
+            logoutBtn.style.right = '20px';
+            logoutBtn.style.zIndex = '1000';
+            logoutBtn.style.background = 'rgba(220, 53, 69, 0.8)';
+            logoutBtn.style.color = 'white';
+            logoutBtn.style.border = 'none';
+            logoutBtn.style.padding = '10px 15px';
+            logoutBtn.style.borderRadius = '20px';
+            logoutBtn.style.cursor = 'pointer';
+            logoutBtn.style.display = 'none';
+            logoutBtn.id = 'globalLogoutBtn';
+            logoutBtn.onclick = () => amandaPro.logout();
+            document.body.appendChild(logoutBtn);
+            
+            // Mostrar botão de logout quando logado
+            const checkLogin = setInterval(() => {
+                if (amandaPro.isAuthenticated) {
+                    document.getElementById('globalLogoutBtn').style.display = 'block';
+                    clearInterval(checkLogin);
+                }
+            }, 1000);
+            
+            console.log('✅ Sistema AMANDA PRO Elite carregado e pronto!');
+        });
+
+        // ==============================
+        // FUNÇÕES GLOBAIS PARA HTML
+        // ==============================
+
+        function saveNutritionData() {
+            amandaPro.saveNutritionData();
+        }
+
+        function saveMeasuresData() {
+            amandaPro.saveMeasuresData();
+        }
+
+        function saveHormoneData() {
+            amandaPro.saveHormoneData();
+        }
+
+        function saveSupplementsData() {
+            amandaPro.saveSupplementsData();
+        }
+
+        function saveSleepData() {
+            amandaPro.saveSleepData();
+        }
+
+        function calculateWater() {
+            amandaPro.calculateWaterRequirement();
+        }
+    </script>
+</body>
+</html>
